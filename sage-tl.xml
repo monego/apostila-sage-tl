@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretext xml:lang="pt-BR">
+  <article xml:id="transf_lineares">
+    <title>Transformações Lineares através do Aplicativo SageMath</title>
+    <frontmatter xml:id="fm">
+
+      <titlepage>
+
+        <author>
+          <personname>Tiarles R. M. Guterres</personname>
+
+          <department>Departmento de Eletrônica e Computação</department>
+
+          <institution>
+            <line>Universidade Federal de Santa Maria</line>
+            <line>Santa Maria, RS</line>
+          </institution>
+          <email>tiarlesmoralles@hotmail.com</email>
+        </author>
+
+        <author>
+          <personname>Vinicius S. Monego</personname>
+
+          <department>Departmento de Eletrônica e Computação</department>
+
+          <institution>
+            <line>Universidade Federal de Santa Maria</line>
+            <line>Santa Maria, RS</line>
+          </institution>
+          <email>vinicius.monego@ecomp.ufsm.br</email>
+        </author>
+
+        <author>
+          <personname>Alice J. Kozakevicius</personname>
+
+          <department>Departmento de Matemática</department>
+
+          <institution>
+            <line>Universidade Federal de Santa Maria</line>
+            <line>Santa Maria, RS</line>
+          </institution>
+          <email>alice.kozakevicius@gmail.com</email>
+        </author>
+
+        <date><today /></date>
+
+      </titlepage>
+
+      <abstract>
+        <p>Apostila para um minicurso de um dia sobre Transformações Lineares usando o <url href="http://www.sagemath.org/">SageMath</url></p>
+      </abstract>
+
+    </frontmatter>
+
+    <section id="intro">
+      <title>Introdução</title>
+
+      <p>Transformações Lineares é um dos conteúdos tratados na disciplina de Álgebra Linear e possui grande relevância para o estudo de vários outros tópicos (autovalores, autovetores, mudança de base, etc) dentro desta disciplina. Além disso, Transformações Lineares também são vistas em outras disciplinas como por exemplo métodos estatísticos, eletromagnetismo, equações diferenciais, modelagem para engenharia, etc.</p>
+
+      <p>Hoje em dia a disponibilidade de ferramentas computacionais nos permite modelar e simular problemas em diferentes áreas de forma interativa e com visualização eficiente de resultados, aumentando a qualidade das análises decorrentes. Neste sentido, o  minicurso proposto procura motivar o estudo da Álgebra Linear através da utilização do aplicativo livre e gratuito <url href="http://www.sagemath.org/">SageMath</url>, permitindo uma melhor visualização e interpretação de resultados geométricos referentes à disciplina. Para isso, abordaremos o capítulo de Transformações Lineares do plano no plano, conforme proposto em <xref ref="trans_boldrini" /></p>
+
+      <p>A vantagem da escolha deste aplicativo é devido à sua flexibilidade de utilização, pois pode ser feita completamente na nuvem, sem que o aplicativo tenha que ser instalado na máquina do usuário.</p>
+
+    </section>
+
+    <section id="sagemath">
+      <title>SageMath: a ferramenta de desenvolvimento</title>
+
+      <p>SageMath é um CAS (Computer Algebra System, ou Sistema de Álgebra Computacional) distribuído como <url href="https://www.gnu.org/philosophy/free-sw.pt-br.html">software livre</url> e construído por muitos pacotes livres distintos unidos em uma interface usando a linguagem de programação Python. Sua missão é ser um substituto livre viável aos CAS proprietários tradicionais, como MATLAB® ou Mathematica®.</p>
+
+      <p>A seguir apresentam-se os passos principais para se poder trabalhar nesse ambiente computacional. Logo após, os principais conceitos e definições de transformações lineares serão explorados através do Sage. A forma mais fácil de se usar o SageMath é se cadastrando no <url href="https://www.cocalc.com/">CoCalc</url>. O CoCalc é uma plataforma colaborativa baseada em computação em nuvem voltada para aplicações matemáticas.</p>
+
+      <p>Para realizar o cadastro:</p>
+
+      <ul>
+        <li><p>Se for novo usuário: preencher os dados na página inicial e clicar em "Sign Up!", ao clicar em "Sign Up" você concorda com os Termos de Serviço.</p></li>
+        <li><p>Se já estiver cadastrado, informar o email e a senha do cadastro e clicar em "Sign in" .</p></li>
+      </ul>
+
+      <p>O cadastro e acesso pode ser realizado também diretamente a partir de outras redes em que o usuário já esteja inscrito como Facebook, GitHub, Google ou Twitter.</p>
+
+      <p>O SageMath também pode ser instalado localmente para ser utilizado offline, porém só existem versões nativas para os sistemas operacionais OS X e GNU/Linux.</p>
+
+    </section>
+
+    <section id="sm_usage">
+      <title>Utilização do SageMath</title>
+
+      <subsection>
+        <title>Criar novo projeto</title>
+
+        <p>No CoCalc:</p>
+
+        <ol>
+          <li><p>Clicar em "Projects" e depois na opção "Create New Project", dar nome ao projeto na linha da opção correspondente (será aberta uma janelinha para estas informações) e clicar em "Create Project without upgrades". Automaticamente o projeto criado aparecerá na sua lista de projetos existentes. Esta opção garante que o projeto estará dentro de um pacote para usuários básicos do SageMath, para equipes maiores ou projetos mais complexos existem os pacotes com upgrade para um melhor suporte aos desenvolvedores.</p></li>
+          <li><p>Abrir o projeto e clicar na aba "New" para criar um novo arquivo ou diretório.</p></li>
+          <li><p>Coloque um nome no arquivo e clique em "Sage Worksheet" para abrir uma planilha (espaço de trabalho).</p></li>
+        </ol>
+
+      <p>É possível criar outro tipo de arquivo, como um arquivo LaTeX na opção "LaTeX Document" ou um arquivo de texto na opção "File". Para criar outro tipo de arquivo dentro de um mesmo projeto, é só clicar em "New" e escolher a opção desejada (Sage Worksheet,  Jupyter Notebook, File, Folder, From Internet, LaTeX Document, Terminal, Task List).</p>
+      </subsection>
+
+      <subsection>
+        <title>Trabalhar em projeto já existente</title>
+
+        <p>Para abrir o projeto é preciso clicar em "Projects" e clicar no projeto que deseja abrir. Aparecerão todos os arquivos e diretórios criados dentro do projeto. É só clicar na opção que desejar abrir.</p>
+        <p>Uma planilha no Sage é composta por várias células nas quais se escrevem códigos. Pode-se pensar nessas células como sendo linhas com uma ou mais instruções.</p>
+        <p>Para avaliar cada célula individualmente, é necessária a combinação de teclas <c>Shift+Enter</c> no final de cada instrução. Isso fará com que o resultado da célula (instrução) apareça em uma janela.</p>
+        <p>Este passo será considerado sempre que se desejar visualizar os resultados das operações em questão.</p>
+        <p>Para sair do CoCalc é só clicar onde é mostrado seu nome, no canto superior direito da tela, e depois clicar em "Sign out".</p>
+      </subsection>
+
+      <subsection>
+        <title>Começando a usar a planilha</title>
+        <p>Aqui descreveremos como executar as operações básicas das transformações lineares na planilha.</p>
+
+        <p>A construção de um vetor é feita por um objeto do tipo <c>vector</c>, o qual recebe como parâmetros uma lista de números que representam as suas coordenadas. Uma lista é delimitada por colchetes. Para representar vetores no <m>\mathbb{R}^2</m>, a lista conterá dois elementos.</p>
+      </subsection>
+
+      <sage>
+        <input>
+          v = vector([5, 6])
+          print(v)
+        </input>
+        <output>
+          (5, 6)
+        </output>
+      </sage>
+
+      <p>A construção de uma matriz é feita por um objeto do tipo <c>matrix</c>, o qual recebe como parâmetros uma lista de listas, cada uma indicando as linhas da matriz.</p>
+
+      <sage>
+        <input>
+          M = matrix([[1, 2],
+                      [3, 4]])
+          print(M)
+        </input>
+        <output>
+          [1 2]
+          [3 4]
+        </output>
+      </sage>
+
+      <p>A operação de multiplicação de uma constante por um vetor, entre dois vetores (Produto Escalar ou Interno) ou entre um vetor e uma matriz é feita utilizando o operador <c>*</c>, como mostram os exemplos a seguir:</p>
+
+      <sage>
+        <input>
+          k = 3               # Constante
+          v = vector([1, 0])  # vetor
+
+          W1 = k*v           # Constante x Vetor
+
+          p = vector([2, 2])
+          W2 = v*p           # Vetor x Vetor
+
+          M = matrix([[1, 2],
+                      [3, 4]])
+          c1 = M*v            # Matriz * Vetor (Extrai a coluna 1 de M)
+          l1 = v*M            # Vetor * Matriz (Extrai a linha 1 de M)
+
+          print(c1)
+          print(l1)
+        </input>
+      </sage>
+
+      Soma de dois vetores:
+
+      <sage>
+        <input>
+          v = vector([5, 6])
+          t = vector([3, 1])
+          vsoma = v + t
+          nulo = vector([0,0])
+
+          plot_v = arrow(nulo, v)
+          plot_t = arrow(nulo, v+t, color='green')
+          plot_vt = arrow(v, v+t, color='red')
+          show(plot_v + plot_t + plot_vt, aspect_ratio=1)
+        </input>
+      </sage>
+      
+    </section>
+
+    <section>
+      <title>Transformações Lineares - Transformações do plano no plano</title>
+
+      <definition>
+      <statement>Sejam <m>V=\mathbb{R}^2</m> espaço domínio, <m>W=\mathbb{R}^2</m> espaço contradomínio. Uma transformação <m>T: V \rightarrow W</m>, é uma aplicação que a cada <m>v \in V</m> associa um vetor <m>w \in W</m>, <m>w=T(v)</m>, <m>w</m> sendo a imagem do vetor <m>v</m> pela aplicação <m>T</m>.</statement>
+      </definition>
+
+      <p>T é dita Transformação Linear se satisfaz as seguintes propriedades:</p>
+
+      <ul>
+        <li><p><m>T(u+v)=T(u)+T(v)</m>, para quaisquer vetores <m>u</m> e <m>v \in V</m>.</p></li>
+        <li><p><m>T(av)=aT(v)</m>, para todo <m>a \in \mathbb{R}</m> e para todo <m>v \in V</m>.</p></li>
+      </ul>
+
+        <p>Resultado importante:</p>
+        <p>Dada uma base <m>B = \{e_1, e_2\}</m> do espaço domínio <m>V</m>, e uma base <m>D</m> do contradomínio <m>W</m>, temos:</p>
+        <ol>
+          <li><p>As coordenadas de um vetor <m>v</m> na base <m>B</m> são as constantes da combinação linear deste vetor em função dos elementos da base e a notação é dada por: <m>[v]_B=(a,b)_B := ae_1+be_2</m>;</p></li>
+          <li><p>A imagem de v pela aplicação linear  T leva em consideração as coordenadas de v na base B, uma vez  que <m>T(v)=T(a,b) =T(ae_1+be_2) =T(ae_1) +T(be_2)=aT(e_1) +bT(e_2)</m>;</p></li>
+
+          <li><p>Como o contradomínio W ainda pode ter uma base <m>D</m> diferente da base do domínio,  <m>T(e_1)</m> e <m>T(e_2)</m> devem ser escritos na base <m>D</m> de <m>W</m>. Com isso a transformação T pode ser escrita na forma matricial que leva em consideração estes fatos: <m>[ T(e_1) T(e_2)]^B_D [v]_B = T(v)</m> e a matriz <m>[T(e_1) T(e_2)]^ B_D</m> é dita a matriz da transformação em relação às bases <m>B</m> e <m>D</m>.</p></li>
+        </ol>
+
+        <p>Assim, toda transformação linear possui uma forma matricial que depende da escolha das bases para o domínio e contradominio. Na verdade, dada uma matriz, também é possível se determinar uma única transformação linear associada à matriz dada, ver <xref ref="trans_boldrini" />.</p>
+        <p>Dito isso, <m>[T] v=w</m> recebe esta notação simplificada, quando as bases B e D forem as canônicas de cada espaço. Sendo portanto <m>[T]</m> a matriz da transformação linear da canônica na canônica, e w a imagem de v pela transformação T, ambos vetores escritos nas respectivas bases canônicas.</p>
+        <p>Dependendo da aplicação e do software, pode ser interessante também considerar a transposta desta relação matricial: assim podemos tratar <m>w^t= v^t [T]^t</m>.</p>
+
+        <p>Para representarmos uma Transformação Linear no SageMath, são necessários dois tipos de dados: a matriz e o vetor. A operação se dá pela multiplicação da matriz pelo vetor, na forma:</p>
+
+        <me>
+          \left[
+          \begin{array}{cc}
+          a_{00} &amp; a_{10}\\
+          a_{01} &amp; a_{11}
+          \end{array}
+          \right] \times \left[
+          \begin{array}{c}
+          x_0\\
+          y_0
+          \end{array}
+          \right] = \left[
+          \begin{array}{c}
+          x_1\\
+          y_1
+          \end{array}
+          \right]
+        </me>
+
+        <p>Como nome já diz a transformação é linear, onde:</p>
+
+        <me>
+          \left[
+          \begin{array}{c}
+          x_1\\
+          y_1
+          \end{array}
+          \right] = \left[
+          \begin{array}{c}
+          x_0a_{00} + y_0a_{10}\\
+          x_0a_{01} + y_0a_{11}
+          \end{array}
+          \right]
+        </me>
+
+        <p>Para introduzirmos melhor o conceito de transformações temos alguns exemplos básicos de transformações do plano no plano (ou no <m>\mathbb{R}^2</m>):</p>
+
+        <subsection>
+          <title>Expansão e contração uniforme</title>
+
+          <p>O vetor transformado mantém direção e sentido, porém o seu módulo varia:</p>
+
+          <sage>
+            <input>
+             v = vector([5, 6])   # vetor
+             M = matrix([[3, 0],
+                          [0, 3]]) # Matriz de Transformação
+
+             W = M*v
+             print(W)
+
+             v_plot = arrow((0,0), v, color="black")
+             W_plot = arrow((0,0), W, color="red")
+
+             show(W_plot + v_plot, aspect_ratio=1)
+            </input>
+          </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Reflexão em torno do eixo</title>
+
+          <p>Para refletir um vetor em torno de um dos eixos basta modificar o sentido de uma de suas componentes:</p>
+
+          <sage>
+            <input>
+              v = vector([5, 6])    # Vetor
+              M = matrix([[1, 0],
+                          [0, -1]]) # Matriz de Transformação
+
+              nulo = vector([0,0])
+
+              W = M*v
+              print(W)
+
+              v_plot = arrow(nulo, v, color="black")
+              W_plot = arrow(nulo, W, color="red")
+
+              show(v_plot + W_plot, aspect_ratio=1)
+            </input>
+          </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Reflexão na origem</title>
+
+          <p>Para refletir um vetor na origem muda-se o sentido de de todo o vetor:</p>
+
+          <sage>
+            <input>
+              v = vector([5, 6])    # Vetor
+              M = matrix([[-1, 0],
+                          [0, -1]]) # Matriz de Transformação
+              nulo = vector([0, 0])
+
+              W = M*v
+              print(W)
+
+              v_plot = arrow(nulo, v, color="black")
+              W_plot = arrow(nulo, W, color="red")
+
+              show(v_plot + W_plot, aspect_ratio=1)
+            </input>
+          </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Rotação em ângulo</title>
+
+          <p>A rotação de um vetor em ângulo <m>\theta</m> depende da matriz de rotação. Neste caso, para cada escolha de $\theta$ é possível variar o ângulo de orientação do vetor, mantendo seu módulo.</p>
+
+          <sage>
+            <input>
+              v = vector([1, 0])
+              theta = pi/3
+              M = matrix([[cos(theta), -sin(theta)],
+                          [sin(theta), cos(theta)]])
+              nulo = vector([0,0])
+
+              W = M*v
+              print(W)
+              v_plot = arrow(nulo, v, color="black")
+              W_plot = arrow(nulo, W, color="red")
+
+              show(v_plot + W_plot, aspect_ratio=1)
+            </input>
+          </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Cisalhamento</title>
+
+          <p>No cisalhamento uma das componentes permanece a mesma e a outra sofre transformação em função da outra componente:</p>
+
+          <sage>
+            <input>
+             v = vector([5, 6])    # Vetor
+             M = matrix([[1, 0],
+                          [2, 1]])  # Matriz de Transformação
+
+             nulo = vector([0, 0])
+
+             W = M*v
+
+             v_plot = arrow(nulo, v, color="black")
+             W_plot = arrow(nulo, W, color="red")
+
+             show(v_plot + W_plot, aspect_ratio=1)
+            </input>
+          </sage>
+
+        </subsection>
+
+      </section>
+
+      <section>
+        <title>Tópicos complementares</title>
+
+        <subsection>
+          <title>Translação</title>
+
+          <p>A translação de um vetor é a mudança de posição deste vetor através da soma com um valor constante. Esta transformação não é linear, no entanto pode ser tratada através de sua representação via SageMath.</p>
+          <p>O resultado é a mudança do vetor para uma posição paralela, preservando todos os demais elementos:  direção, sentido e módulo do vetor.</p>
+          <p>Lembrando que um vetor é obtido através da variação entre duas posições inicial A e final B, (v = Ponto B - Ponto A),  um vetor somado a um ponto é então um novo ponto (v + Ponto A = Ponto B). Essa é a essência da translação a ser representada agora.</p>
+
+          <sage>
+            <input>
+              v = vector([4, 5])     # Vetor 1
+              t = vector([3, 1])     # Vetor 2
+              m = identity_matrix(2) # Matriz Identidade
+              W = v * m             # = Vetor 1
+              W = W + t
+
+              nulo = vector([0,0])
+
+              v_plot =  arrow(nulo, v  , color = "blue")
+              W_plot = arrow(t, W , color = "black")
+
+              show(v_plot + W_plot, aspect_ratio=1)
+            </input>
+          </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Transformação com matrizes de Markov</title>
+
+          <p>As matrizes de Markov são matrizes que possuem a soma das suas colunas igual a um (1).</p>
+
+          <ul>
+            <li><p>Elas sempre terão um autovalor igual a 1;</p></li>
+            <li><p>Depois de transformado, o vetor imagem terá a soma de suas componentes preservada: <m>x_0 + y_0 = x_1 + y_1</m>.</p></li>
+          </ul>
+
+          <p>Por exemplo:</p>
+
+          <sage>
+            <input>
+              v = vector([5, 7])
+
+              soma = v[0]+v[1]  # Soma das componentes
+              Q = matrix([[.2, .7],
+                          [.8, .3]]) # -> Matriz de Markov (Sum. Colunas = 1)
+
+              W = Q*v               # Formato da Transformação
+              soma = W[0]+W[1]
+              print(soma)
+            </input>
+          </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Formas básicas no <m>\mathbb{R}^2</m></title>
+
+          <p>O SageMath dá suporte para trabalhar com representações gráficas (plots) em 2D e 3D, veja em <xref ref="plotdoc" />. Para exemplificar, apresentaremos formas básicas no <m>\mathbb{R}^3</m></p>
+
+          <p>Plano e seu Vetor Normal:</p>
+
+            <sage>
+              <input>
+                plane(x, y, z) = x + z # Definindo uma função dependente  de x, y e z
+                v_normal = vector([1,0,1])
+                lim = 1 # Delimitações do espaço para plotagem
+                nulo = vector([0,0,0])
+
+                plane_plot = implicit_plot3d(plane, (x, -lim, lim), (y, -lim, lim), (z, -lim, lim), mesh=True, color="lime") # Função utilizada para plotagens implícitas em 3D
+
+                v_normal_plot = arrow(nulo, v_normal, color="black")
+
+                show(plane_plot + v_normal_plot)
+              </input>
+            </sage>
+
+            <p>Circunferência:</p>
+
+            <p>Esta circunferência no <m>\mathbb{R}^2</m> é limitada nos eixos x e y, ela existe para todo z quando representada no <m>\mathbb{R}^3</m>.</p>
+
+            <sage>
+              <input>
+                cir(x,y,z) = x^2 + y^2 - 4
+                lim = 2
+
+                cir_plot = implicit_plot3d(cir, (x, -lim, lim), (y, -lim, lim), (z, -lim, lim), mesh=True, color="red")
+
+                show(cir_plot)
+              </input>
+            </sage>
+
+            <p>Esfera:</p>
+
+            <sage>
+              <input>
+                esf(x,y,z) = x^2 + y^2 + z^2 - 4
+                lim = 2
+
+                esf_plot = implicit_plot3d(esf, (x, -lim, lim), (y, -lim, lim), (z, -lim, lim), mesh=True)
+
+                show(esf_plot)
+              </input>
+            </sage>
+
+        </subsection>
+
+        <subsection>
+          <title>Outras formas de abordagem de transformações lineares com o SageMath</title>
+
+          <p>O material apresenta algumas formas bem interessantes e intuitivas de abordar transformações lineares no SageMath. No exemplo:</p>
+
+          <sage>
+            <input>
+              x1, x2, x3 = var('x1, x2, x3')
+              outputs = [ -x1 +        2*x3,
+              x1 + 3*x2 + 7*x3,
+              x1 +   x2 +   x3,
+              2*x1 + 3*x2 + 5*x3]
+              T_symbolic(x1, x2, x3) = outputs         # Matriz com variáveis
+            </input>
+          </sage>
+
+          <sage>
+            <input>
+              T = linear_transformation(QQ^3, QQ^4, T_symbolic)
+              T
+            </input>
+            <output>
+              Vector space morphism represented by the matrix:
+              [-1  1  1  2]
+              [ 0  3  1  3]
+              [ 2  7  1  5]
+              Domain: Vector space of dimension 3 over Rational Field
+              Codomain: Vector space of dimension 4 over Rational Field
+            </output>
+          </sage>
+
+
+          <p>Com esta função cria-se uma função para transformação linear com domínio de   3 dimensões e contradomínio de 4 dimensões <m>QQ^3</m> e <m>QQ^4</m>, respectivamente).</p>
+
+          <sage>
+            <input>
+              u = vector(QQ, [3, -1, 2])
+              w = T(u)
+              print(w)
+            </input>
+            <output>
+              (1, 14, 4, 13)
+            </output>
+          </sage>
+
+          Por fim, um vetor <m>\vec{U}</m> é transformado pela matriz <m>[T]</m>, na forma mais utilizada em Álgebra Linear.
+
+        </subsection>
+
+        <subsection id="procimg">
+          <title>Aplicação: Processamento de Imagens</title>
+
+          <p>As operações vistas até aqui podem ser aplicadas para realizar transformações em imagens. Como exemplo, suponha uma imagem de resolução 500x500 (altura x largura) e o eixo de rotação no centro da imagem, no ponto (250,250), onde a origem será (0,0). Queremos aplicar uma transformação de rotação na imagem fazendo a imagem girar 30º. Qual será a nova posição do pixel do ponto <m>[-13, 30]</m> já em relação a essa origem?</p>
+
+          <p>Para isso aplica-se a matriz de rotação neste ponto.</p>
+
+          <me>
+            \left[
+            \begin{array}{c}
+            x'\\
+            y'
+            \end{array}
+            \right] = \left[
+            \begin{array}{c}
+            cos(30) \quad -sin(30)\\
+            sin(30) \quad cos(30)
+            \end{array}
+            \right]
+            \left[
+            \begin{array}{c}
+            -13\\
+            30
+            \end{array}
+            \right]
+          </me>
+
+          Multiplicando a matriz de rotação pelo vetor, obtemos o resultado (arredondado) <m>-26,19</m>. Essa é a nova coordenada do ponto <m>[-13,30]</m> após uma rotação de 30º.
+
+          Programas de manipulação de imagem como o GIMP <xref ref="gimp" /> utilizam este mesmo procedimento na rotação de imagens. A rotação consiste em aplicar a transformada em cada pixel da imagem representado pelas suas coordenadas <m>[x,y]</m>. Este processo é iterativo e leva mais tempo de execução quanto maior for a resolução da imagem (mais pontos precisam ser calculados). A <xref ref="fig_gimp" /> mostra a interface gráfica de usuário aplicando uma transformação de rotação.
+
+          <figure xml:id="fig_gimp">
+            <caption>Imagem original e sua rotação de 12º em torno do centro, realizada no GIMP. Fonte: <em>max_gloin</em> em Pixabay.</caption>
+            <image width="100%" source="figs/gimp.png">
+              <description>Imagem original e sua rotação de 12º em torno do centro, realizada no GIMP.</description>
+            </image>
+          </figure>
+
+        </subsection>
+
+      </section>
+
+      <backmatter xml:id="backmatter">
+        <title>Referências</title>
+
+        <references>
+          <title>Referências</title>
+
+          <biblio type="raw" xml:id="trans_boldrini">J. L. Boldrini, S. I. R. Costa, V. R. Ribeiro, &amp; H. G. Wetzler, <title>Álgebra Linear e Aplicações</title>. Sec 5.2 Transformações do plano no plano. Harper-Row, São Paulo, 1987</biblio>
+
+          <biblio type="raw" xml:id="beezer"> <url href="http://buzzard.ups.edu/">Página do professor Robert A. Beezer da University of Puget Sound, Tacoma, WA.</url> </biblio>
+
+          <biblio type="raw" xml:id="plotdoc"> <url href="http://doc.sagemath.org/html/en/reference/plotting/sage/plot/plot.html">Capítulo da Documentação do SageMath que aborda os vários tipos de plotagens suportados pela ferramenta</url> </biblio>
+
+          <biblio type="raw" xml:id="examples_sage"> <url href="http://linear.ups.edu/">Parte complementar do livro "A First Course in Linear Algebra", de Robert A. Beezer.</url> </biblio>
+
+          <biblio type="raw" xml:id="gimp"> <url href="https://www.gimp.org/">GIMP (GNU Image Manipulation Program)</url></biblio>
+
+        </references>
+
+      </backmatter>
+
+  </article>
+</pretext>
